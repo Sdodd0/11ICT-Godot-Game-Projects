@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://bjjjfa7eot2nm"]
+
+[ext_resource type="PackedScene" uid="uid://dk478udj0maon" path="res://Assets/floor_level_base.tscn" id="1_jw0nh"]
+[ext_resource type="Script" uid="uid://bva0onlv1h8ev" path="res://Scripts/floor_level_base.gd" id="2_hw14s"]
+[ext_resource type="PackedScene" uid="uid://c3ns3g7nsmx8v" path="res://Assets/tree_obstacle.tscn" id="3_hw14s"]
+[ext_resource type="Script" uid="uid://1agskfk8xdi7" path="res://Assets/pedestrian_npc.gd" id="5_h0cia"]
+[ext_resource type="Texture2D" uid="uid://dg7hdxgehqj2l" path="res://Texture Library/Orange.png" id="5_spxo4"]
+[ext_resource type="Script" uid="uid://dlu0y4i8c422b" path="res://Assets/walking_animation_player_npc.gd" id="6_mbcrk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m4mvd"]
+albedo_color = Color(0, 0.654902, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_lve5p"]
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epsdm"]
+albedo_color = Color(0, 0.654902, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_guxl2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wk3tb"]
+albedo_texture = ExtResource("5_spxo4")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ekepb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1u6im"]
+albedo_color = Color(1, 0.85882354, 0.6745098, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vh0xe"]
+
+[sub_resource type="Animation" id="Animation_8kprj"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CapMeshInstance3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_c2mex"]
+resource_name = "Walking_Animation"
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.5, 1, 0, 0.5, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CapMeshInstance3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.75, 1, 0, 0, -0.173648, 0.984808)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_88dnl"]
+_data = {
+&"RESET": SubResource("Animation_8kprj"),
+&"Walking_Animation": SubResource("Animation_c2mex")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hvhry"]
+size = Vector3(1.5357666, 3.2609253, 1.8329468)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4xh6m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xh6m"]
+size = Vector3(1.2758493, 0.775177, 1.5017395)
+
+[node name="Level_Chunk6" type="Node3D" unique_id=700020482]
+
+[node name="Timeout_Despawn_Timer" type="Timer" parent="." unique_id=2116023490]
+wait_time = 9.0
+autostart = true
+
+[node name="PedestrianNPCGroup" type="Node3D" parent="." unique_id=448191997]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+script = ExtResource("5_h0cia")
+
+[node name="CapMeshInstance3D" type="MeshInstance3D" parent="PedestrianNPCGroup" unique_id=1133437326]
+transform = Transform3D(1.6, 0, 0, 0, 1.6000001, 0, 0, 0, 1.6, 0, 2.5, 0)
+material_override = SubResource("StandardMaterial3D_m4mvd")
+mesh = SubResource("SphereMesh_lve5p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianNPCGroup/CapMeshInstance3D" unique_id=95846475]
+transform = Transform3D(0.9728259, -1.1175871e-08, 2.856832e-07, 3.0733645e-08, -8.195641e-08, 1.0161697, -7.450581e-09, -0.992788, -4.0978193e-08, 0.40549725, 0.0096793175, 0.0014549904)
+material_override = SubResource("StandardMaterial3D_epsdm")
+mesh = SubResource("QuadMesh_guxl2")
+
+[node name="CapsuleMeshInstance3D" type="MeshInstance3D" parent="PedestrianNPCGroup" unique_id=1945793094]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_wk3tb")
+mesh = SubResource("CapsuleMesh_ekepb")
+
+[node name="SphereMeshInstance3D" type="MeshInstance3D" parent="PedestrianNPCGroup" unique_id=1472305788]
+transform = Transform3D(1.55, 0, 0, 0, 1.55, 0, 0, 0, 1.55, 0, 2.3695962, 0)
+material_override = SubResource("StandardMaterial3D_1u6im")
+mesh = SubResource("SphereMesh_vh0xe")
+
+[node name="WalkingAnimationPlayerNPC" type="AnimationPlayer" parent="PedestrianNPCGroup" unique_id=1552543593]
+libraries/ = SubResource("AnimationLibrary_88dnl")
+script = ExtResource("6_mbcrk")
+
+[node name="PedestrianHitbox" type="Area3D" parent="PedestrianNPCGroup" unique_id=751809040]
+transform = Transform3D(1.25, 2.220446e-15, 4.440892e-15, 0, 1.2500001, 9.147938e-16, 4.440892e-15, 9.147938e-16, 1.2500001, 0, 0, 0)
+
+[node name="Hitbox_Shape" type="CollisionShape3D" parent="PedestrianNPCGroup/PedestrianHitbox" unique_id=1139423408]
+transform = Transform3D(1, -1.2434498e-14, -1.0658141e-14, 0, 0.99999964, 1.7881393e-07, 0, -1.7881393e-07, 0.99999964, -0.12786865, 0.91755843, 0.03196325)
+shape = SubResource("BoxShape3D_hvhry")
+
+[node name="Level_Chunk1" parent="." unique_id=280130617 instance=ExtResource("1_jw0nh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("2_hw14s")
+
+[node name="Floor_Hitbox" type="StaticBody3D" parent="Level_Chunk1" unique_id=2018511175]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level_Chunk1/Floor_Hitbox" unique_id=1595641845]
+transform = Transform3D(4.25, 0, 0, 0, 4.25, 0, 0, 0, 4.25, 14.170512, -0.1466093, 32.802372)
+shape = SubResource("WorldBoundaryShape3D_4xh6m")
+
+[node name="Tree_Obstacle1" parent="Level_Chunk1" unique_id=1398551968 instance=ExtResource("3_hw14s")]
+transform = Transform3D(5.5, 0, 0, 0, 5.5, 0, 0, 0, 5.5, -0.34, 0, -2.4106622)
+
+[node name="HitBox" type="Area3D" parent="Level_Chunk1/Tree_Obstacle1" unique_id=1357330208]
+
+[node name="HitBox Shape" type="CollisionShape3D" parent="Level_Chunk1/Tree_Obstacle1/HitBox" unique_id=1876418236]
+transform = Transform3D(1.090909, 0, 0, 0, 1.090909, 0, 0, 0, 1.090909, -0.37277824, 1.505545, 0.25730038)
+shape = SubResource("BoxShape3D_4xh6m")
+
+[node name="Tree_Obstacle2" parent="Level_Chunk1" unique_id=1151149415 instance=ExtResource("3_hw14s")]
+transform = Transform3D(-2.4041265e-07, 0, -5.5, 0, 5.5, 0, 5.5, 0, -2.4041265e-07, 25.238, 0, 3.864133)
+
+[node name="HitBox" type="Area3D" parent="Level_Chunk1/Tree_Obstacle2" unique_id=1467571789]
+
+[node name="HitBox Shape" type="CollisionShape3D" parent="Level_Chunk1/Tree_Obstacle2/HitBox" unique_id=279365913]
+transform = Transform3D(1.090909, 0, 0, 0, 1.090909, 0, 0, 0, 1.090909, -0.37277824, 1.505545, 0.16353369)
+shape = SubResource("BoxShape3D_4xh6m")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=819129843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.955952, 22.716568, 45.227596)
+
+[connection signal="timeout" from="Timeout_Despawn_Timer" to="Level_Chunk1" method="_on_timeout_despawn_timer_timeout"]
+[connection signal="ready" from="PedestrianNPCGroup" to="PedestrianNPCGroup/WalkingAnimationPlayerNPC" method="_on_pedestrian_npc_group_ready"]
+[connection signal="area_entered" from="PedestrianNPCGroup/PedestrianHitbox" to="PedestrianNPCGroup" method="_on_pedestrian_hitbox_area_entered"]
+[connection signal="area_entered" from="Level_Chunk1/Tree_Obstacle1/HitBox" to="Level_Chunk1" method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="Level_Chunk1/Tree_Obstacle2/HitBox" to="Level_Chunk1" method="_on_hit_box_area_entered"]

@@ -1,0 +1,100 @@
+[gd_scene format=4 uid="uid://d4gpxb6vi4htv"]
+
+[ext_resource type="Script" uid="uid://umqsh5y4t5m0" path="res://Assets/World_Manager.gd" id="1_2xe70"]
+[ext_resource type="PackedScene" uid="uid://ckhb4d1asbmnp" path="res://Assets/Main_Character.tscn" id="2_boltm"]
+[ext_resource type="Texture2D" uid="uid://d3tk0tavrxnog" path="res://Texture Library/Green Texture.png" id="3_4exj2"]
+[ext_resource type="Script" uid="uid://d4du1afq3pmex" path="res://Scripts/button.gd" id="4_1fraw"]
+[ext_resource type="Script" uid="uid://d0d0vmkjbqmpq" path="res://label.gd" id="5_2xe70"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1fraw"]
+albedo_texture = ExtResource("3_4exj2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mtfi"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_bkwj2"]
+_surfaces = [{
+"aabb": AABB(-1500, -4250, 0, 3000, 8500, 1e-05),
+"format": 34359742465,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAgADAAAA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AIC7xADQhEUAAAAAAIC7RADQhEUAAAAAAIC7RADQhMUAAAAAAIC7xADQhMUAAAAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_2xe70"]
+resource_name = "Floor_Level_Base_mesh31"
+_surfaces = [{
+"aabb": AABB(-1500, -4250, 0, 3000, 8500, 1e-05),
+"attribute_data": PackedByteArray("AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAAAAAAAAAAA="),
+"format": 34359742487,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAgADAAAA"),
+"material": SubResource("StandardMaterial3D_7mtfi"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AIC7xADQhEUAAAAAAIC7RADQhEUAAAAAAIC7RADQhMUAAAAAAIC7xADQhMUAAAAA/3//f////z//f/9/////P/9//3////8//3//f////z8=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_bkwj2")
+
+[node name="Procedural_Generation" type="Node3D" unique_id=642785631]
+script = ExtResource("1_2xe70")
+
+[node name="Chunk_Loader_Timer" type="Timer" parent="." unique_id=1735237683]
+wait_time = 3.0
+autostart = true
+
+[node name="CharacterBody3D" parent="." unique_id=1934297900 instance=ExtResource("2_boltm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.929703, 0)
+
+[node name="LevelBase" type="MeshInstance3D" parent="." unique_id=1841350409]
+transform = Transform3D(-4.371139e-09, -0.1, -4.371139e-09, 0, -4.371139e-09, 0.1, -0.1, 4.371139e-09, 1.9106854e-16, 14.220339, -0.15999995, -49.373505)
+material_override = SubResource("StandardMaterial3D_1fraw")
+mesh = SubResource("ArrayMesh_2xe70")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1593410567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 25, 70)
+light_energy = 2.25
+shadow_enabled = true
+shadow_bias = 1.0
+omni_range = 5000.0
+omni_attenuation = 0.0
+omni_shadow_mode = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=507129876]
+offset_right = 1150.0
+offset_bottom = 650.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1794850895]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1150, 650)
+render_target_update_mode = 4
+
+[node name="Button" type="Button" parent="SubViewportContainer/SubViewport" unique_id=449135551]
+offset_left = 125.0
+offset_top = 250.0
+offset_right = 1025.0
+offset_bottom = 400.0
+theme_override_font_sizes/font_size = 88
+text = "START GAME"
+script = ExtResource("4_1fraw")
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1399576241]
+offset_right = 246.0
+offset_bottom = 99.0
+theme_override_font_sizes/font_size = 40
+text = "score:"
+uppercase = true
+script = ExtResource("5_2xe70")
+
+[connection signal="ready" from="." to="." method="_on_ready"]
+[connection signal="ready" from="Chunk_Loader_Timer" to="." method="_on_chunk_loader_timer_ready"]
+[connection signal="timeout" from="Chunk_Loader_Timer" to="." method="_on_chunk_loader_timer_timeout"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/Button" to="SubViewportContainer/SubViewport/Button" method="_on_pressed"]

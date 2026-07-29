@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bc110p3cghrjb"]
+
+[ext_resource type="Texture2D" uid="uid://lgrnnowo7k2m" path="res://SpellBook.png" id="1_q6f3t"]
+
+[node name="SpellBook" type="Node2D" unique_id=830821810]
+
+[node name="SpellBookSprite" type="Sprite2D" parent="." unique_id=1744789699]
+position = Vector2(576, 324)
+scale = Vector2(10, 10)
+texture = ExtResource("1_q6f3t")

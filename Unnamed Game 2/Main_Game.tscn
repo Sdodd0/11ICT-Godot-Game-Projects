@@ -1,0 +1,323 @@
+[gd_scene format=3 uid="uid://i32awdhn45nx"]
+
+[ext_resource type="PackedScene" uid="uid://c2klqejilmxk8" path="res://meditation_spawn.tscn" id="1_ljyvl"]
+[ext_resource type="Script" uid="uid://cmdfjm11puhrh" path="res://spawn.gd" id="1_lxoxe"]
+[ext_resource type="Script" uid="uid://b7i4uhhd7mm6p" path="res://world_manager.gd" id="3_aw5v0"]
+[ext_resource type="Script" uid="uid://sbydmfnmgv85" path="res://grapple_hook.gd" id="4_f2i40"]
+[ext_resource type="Script" uid="uid://chju4twg77dy3" path="res://animation_player.gd" id="5_cjg4v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxoxe"]
+sky_top_color = Color(0.73333335, 0.27450982, 0.24705882, 1)
+sky_horizon_color = Color(0.49169728, 0.3769914, 0.37012866, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.49169728, 0.3769914, 0.37012866, 1)
+
+[sub_resource type="Sky" id="Sky_aw5v0"]
+sky_material = SubResource("ProceduralSkyMaterial_lxoxe")
+
+[sub_resource type="Environment" id="Environment_24er3"]
+background_mode = 2
+sky = SubResource("Sky_aw5v0")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2i40"]
+albedo_color = Color(0.14806068, 0.021077115, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_cjg4v"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_ljyvl"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6qd6b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aw5v0"]
+size = Vector3(10.511658, 0.32373047, 11.542053)
+
+[sub_resource type="SphereMesh" id="SphereMesh_130gx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6qd6b"]
+radius = 0.7307366
+
+[sub_resource type="Animation" id="Animation_foha6"]
+resource_name = "Grapple_Hook_Pulse"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grapple Hook/MeshInstance3D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.3, 0.3, 0.3), Vector3(0.6, 0.6, 0.6), Vector3(0.3, 0.3, 0.3)]
+}
+
+[sub_resource type="Animation" id="Animation_nmp0f"]
+resource_name = "Grapple_Hook_Ready"
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grapple Hook/MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.6, 0.6, 0.6), Vector3(0.9, 0.9, 0.9), Vector3(0.6, 0.6, 0.6)]
+}
+
+[sub_resource type="Animation" id="Animation_n8k4e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grapple Hook/MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.3, 0.3, 0.3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n1smw"]
+_data = {
+&"Grapple_Hook_Pulse": SubResource("Animation_foha6"),
+&"Grapple_Hook_Ready": SubResource("Animation_nmp0f"),
+&"RESET": SubResource("Animation_n8k4e")
+}
+
+[node name="Base Map Group" type="Node3D" unique_id=932230738]
+script = ExtResource("3_aw5v0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=174660409]
+environment = SubResource("Environment_24er3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=849366464]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Base Group" type="Node3D" parent="." unique_id=1748609970]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Base Group" unique_id=1595762735]
+transform = Transform3D(2.25, 0, 0, 0, -9.8350625e-08, -2.5165503, 0, 2.25, -1.10001906e-07, 2.0666652, -1, 2.6235023)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D" unique_id=1870847271]
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D/Area3D" unique_id=366548596]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.00046542287)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Base Group" unique_id=1287754550]
+transform = Transform3D(-0.51734436, -2.1897159, 1.07054625e-07, 0, -9.8350625e-08, -2.5165503, 2.1897159, -0.51734436, 2.5292838e-08, 2.312561, -1, -1.7869905)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D2" unique_id=1768468701]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D2/Area3D" unique_id=16399793]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Base Group" unique_id=1312859222]
+transform = Transform3D(0.5474484, -2.1823843, 1.066962e-07, -0.23766509, -0.059618086, -2.501583, 2.1694045, 0.54419243, -0.27405632, -1.2610221, -1, -4.9738913)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D3" unique_id=1871288236]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D3/Area3D" unique_id=217709828]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Base Group" unique_id=1524550736]
+transform = Transform3D(2.106183, 0.7530052, -0.27276787, -0.23766503, -0.05961807, -2.5015821, -0.7549887, 2.119417, 0.026543215, -2.5527442, -1, -2.691063)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D4" unique_id=1615059581]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D4/Area3D" unique_id=360660897]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Base Group" unique_id=1207093387]
+transform = Transform3D(1.0212965, 1.9983183, -0.18095666, -0.23766503, -0.05961807, -2.5015821, -1.9907204, 1.032312, 0.20581919, -2.414424, -1, 1.4464478)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D5" unique_id=389409993]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D5/Area3D" unique_id=786361235]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Base Group" unique_id=1579751059]
+transform = Transform3D(-1.4920615, 1.6802714, 0.12723619, -0.23766507, -0.059618045, -2.5015821, -1.6672635, -1.495204, 0.2427299, -0.6186323, -1, 5.7979383)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D6" unique_id=1225134031]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D6/Area3D" unique_id=1002113145]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Base Group" unique_id=1665910555]
+transform = Transform3D(-2.2299788, -0.1768843, 0.27030486, -0.23766507, -0.059618022, -2.5015824, 0.18223572, -2.2422442, 0.04518988, -5.928544, -1, 5.2534285)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D7" unique_id=503229565]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D7/Area3D" unique_id=1522049705]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Base Group" unique_id=75977948]
+transform = Transform3D(2.2315178, 0.1568406, -0.2698902, -0.23766504, -0.059618015, -2.5015821, -0.16230139, 2.243735, -0.047603503, 3.0440717, -1, -7.361781)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D8" unique_id=1667551305]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D8/Area3D" unique_id=2134379986]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Base Group" unique_id=1951659246]
+transform = Transform3D(1.1737778, 1.9153856, 0.1416756, 0.08804499, 0.094597444, -2.5123956, -1.9175489, 1.1767974, -0.028634574, 5.891368, -1, -4.372856)
+material_overlay = SubResource("StandardMaterial3D_f2i40")
+mesh = SubResource("PrismMesh_cjg4v")
+
+[node name="Area3D" type="StaticBody3D" parent="Base Group/MeshInstance3D9" unique_id=419738163]
+transform = Transform3D(1, -1.4901161e-08, 8.881784e-16, 1.4901161e-08, 1, 6.661338e-16, 0, -3.1086245e-15, 1, 0, 0, 0.009064585)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base Group/MeshInstance3D9/Area3D" unique_id=1065511466]
+transform = Transform3D(1, 0, 0, 0, 1, 3.1974423e-14, 0, -3.5527137e-14, 1, -0.026128292, -0.012743473, -0.0112398565)
+polygon = PackedVector2Array(0.029521465, 0.484411, 0.53165275, -0.48820442, -0.5056218, -0.5031379)
+
+[node name="Spawn" type="Node3D" parent="." unique_id=1151254749]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.210181, 1.1218917, -5.7810545)
+script = ExtResource("1_lxoxe")
+
+[node name="meditation_spawn" parent="Spawn" unique_id=1038610757 instance=ExtResource("1_ljyvl")]
+transform = Transform3D(0.937792, 0, 0.34719753, 0, 1, 0, -0.34719753, 0, 0.937792, 8.535723, 0.76475215, -5.669864)
+top_level = true
+
+[node name="Void" type="Node3D" parent="." unique_id=1459651823]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Void" unique_id=1020313013]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0.008846521, -1.5666513)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.8
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Void" unique_id=176469159]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -0.5, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.7
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Void" unique_id=539186070]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -1, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.6
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Void" unique_id=1285068722]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -1.505, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.5
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Void" unique_id=1994437583]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -2, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.4
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Void" unique_id=1650937149]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -2.5, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.3
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Void" unique_id=1925698890]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -3, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.2
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Void" unique_id=564741632]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, -3.5, 0)
+material_override = SubResource("ORMMaterial3D_ljyvl")
+transparency = 0.1
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_6qd6b")
+metadata/_edit_lock_ = true
+
+[node name="Area3D" type="Area3D" parent="Void" unique_id=913533925]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Void/Area3D" unique_id=110087265]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -2.7153015, -4.103138, 0.2470398)
+shape = SubResource("BoxShape3D_aw5v0")
+
+[node name="Grapple Hook" type="Node3D" parent="." unique_id=578444218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.193553, 3.1447191, -4.0582075)
+script = ExtResource("4_f2i40")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grapple Hook" unique_id=1629295723]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = SubResource("SphereMesh_130gx")
+
+[node name="Grappling Hook Area" type="Area3D" parent="Grapple Hook" unique_id=336635802]
+collision_layer = 783
+input_capture_on_drag = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grapple Hook/Grappling Hook Area" unique_id=848077550]
+shape = SubResource("SphereShape3D_6qd6b")
+
+[node name="HookanimationPlayer" type="AnimationPlayer" parent="Grapple Hook" unique_id=844382616]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_n1smw")
+script = ExtResource("5_cjg4v")
+
+[connection signal="body_exited" from="Void/Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="area_entered" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook" method="_on_grappling_hook_area_area_entered"]
+[connection signal="area_entered" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook/HookanimationPlayer" method="_on_grappling_hook_area_area_entered"]
+[connection signal="area_exited" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook" method="_on_grappling_hook_area_area_exited"]
+[connection signal="area_exited" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook/HookanimationPlayer" method="_on_grappling_hook_area_area_exited"]

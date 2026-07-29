@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cvil52cvsvnd7"]
+
+[ext_resource type="PackedScene" uid="uid://bc110p3cghrjb" path="res://spell_book.tscn" id="1_48ufq"]
+[ext_resource type="Script" uid="uid://dr6f3sqesip3l" path="res://main_character.gd" id="1_wmkwl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wmkwl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wmkwl"]
+size = Vector3(1, 1, 100.33037)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wmkwl"]
+
+[node name="Main Character" type="Node3D" unique_id=770658642]
+
+[node name="Main Character Body" type="CharacterBody3D" parent="." unique_id=865298065]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+script = ExtResource("1_wmkwl")
+
+[node name="Physics Hitbox Shape" type="CollisionShape3D" parent="Main Character Body" unique_id=586889236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0570097, 0)
+shape = SubResource("CapsuleShape3D_wmkwl")
+
+[node name="Camera3D" type="Camera3D" parent="Main Character Body" unique_id=2027007425]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4859545, -0.29741287)
+current = true
+
+[node name="Mouse_Placeholder Area" type="Area3D" parent="Main Character Body/Camera3D" unique_id=64096871]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main Character Body/Camera3D/Mouse_Placeholder Area" unique_id=1327219774]
+transform = Transform3D(1, 0, 0, 0, 0.99959534, -0.02844503, 0, 0.02844503, 0.99959534, 0, 0.77773964, -49.65412)
+shape = SubResource("BoxShape3D_wmkwl")
+
+[node name="SpellBook" parent="Main Character Body" unique_id=830821810 instance=ExtResource("1_48ufq")]
+position = Vector2(-631, 162)
+scale = Vector2(1.5, 1.5)
+
+[node name="Cross Hair" type="Node2D" parent="Main Character Body" unique_id=1761001964]
+position = Vector2(578, 324)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Main Character Body/Cross Hair" unique_id=73135620]
+scale = Vector2(2.5, 50)
+mesh = SubResource("BoxMesh_wmkwl")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="Main Character Body/Cross Hair" unique_id=2105819729]
+scale = Vector2(50, 2.5)
+mesh = SubResource("BoxMesh_wmkwl")

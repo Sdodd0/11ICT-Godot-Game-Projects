@@ -1,0 +1,21 @@
+config_version=5
+
+[application]
+
+config/name="Unnamed Game1"
+run/main_scene="uid://d4gpxb6vi4htv"
+config/features=PackedStringArray("4.6", "Mobile")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Scoremanager="*uid://bolm2ph34fo60"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://clbnsr6q5syxc"]
+
+[ext_resource type="PackedScene" uid="uid://dk478udj0maon" path="res://Assets/floor_level_base.tscn" id="1_konhb"]
+[ext_resource type="Script" uid="uid://bva0onlv1h8ev" path="res://Scripts/floor_level_base.gd" id="2_7osy4"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_04ljm"]
+
+[node name="Empty_Chunk" type="Node3D" unique_id=2011665203]
+
+[node name="Timeout_Despawn_Timer" type="Timer" parent="." unique_id=1072543158]
+wait_time = 9.0
+autostart = true
+
+[node name="Floor_Level_Base" parent="." unique_id=280130617 instance=ExtResource("1_konhb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("2_7osy4")
+
+[node name="Floor_Hitbox" type="StaticBody3D" parent="Floor_Level_Base" unique_id=1415938865]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor_Level_Base/Floor_Hitbox" unique_id=1096027170]
+transform = Transform3D(4.25, 0, 0, 0, 4.25, 0, 0, 0, 4.25, 14.170512, -0.1466093, 32.802372)
+shape = SubResource("WorldBoundaryShape3D_04ljm")
+
+[connection signal="timeout" from="Timeout_Despawn_Timer" to="Floor_Level_Base" method="_on_timeout_despawn_timer_timeout"]

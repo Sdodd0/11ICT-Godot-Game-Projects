@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://btl81je5drqy3"]
+
+[ext_resource type="Script" uid="uid://1agskfk8xdi7" path="res://Assets/pedestrian_npc.gd" id="1_1ny7h"]
+[ext_resource type="Texture2D" uid="uid://dg7hdxgehqj2l" path="res://Texture Library/Orange.png" id="2_pcbgr"]
+[ext_resource type="Script" uid="uid://dlu0y4i8c422b" path="res://Assets/walking_animation_player_npc.gd" id="3_33rit"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8kprj"]
+albedo_color = Color(0, 0.654902, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_pr58e"]
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c2mex"]
+albedo_color = Color(0, 0.654902, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ts055"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8rcd"]
+albedo_texture = ExtResource("2_pcbgr")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hc24b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rvwfd"]
+albedo_color = Color(1, 0.85882354, 0.6745098, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hpw4o"]
+
+[sub_resource type="Animation" id="Animation_8kprj"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CapMeshInstance3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_c2mex"]
+resource_name = "Walking_Animation"
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.5, 1, 0, 0.5, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CapMeshInstance3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.75, 1, 0, 0, -0.173648, 0.984808)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rvwfd"]
+_data = {
+&"RESET": SubResource("Animation_8kprj"),
+&"Walking_Animation": SubResource("Animation_c2mex")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8kprj"]
+size = Vector3(1.5357666, 3.2609253, 1.8329468)
+
+[node name="PedestrianNPCGroup" type="Node3D" unique_id=616154867]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+script = ExtResource("1_1ny7h")
+
+[node name="CapMeshInstance3D" type="MeshInstance3D" parent="." unique_id=583065829]
+transform = Transform3D(1.6000001, 0, 0, 0, 1.6000001, 0, 0, 0, 1.6000001, 0, 3.5363312, 0)
+material_override = SubResource("StandardMaterial3D_8kprj")
+mesh = SubResource("SphereMesh_pr58e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CapMeshInstance3D" unique_id=640367038]
+transform = Transform3D(0.9728259, -1.1175871e-08, 2.856832e-07, 3.0733645e-08, -8.195641e-08, 1.0161697, -7.450581e-09, -0.992788, -4.0978193e-08, 0.40549725, 0.0096793175, 0.0014549904)
+material_override = SubResource("StandardMaterial3D_c2mex")
+mesh = SubResource("QuadMesh_ts055")
+
+[node name="CapsuleMeshInstance3D" type="MeshInstance3D" parent="." unique_id=97665841]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.036331, 0)
+material_override = SubResource("StandardMaterial3D_o8rcd")
+mesh = SubResource("CapsuleMesh_hc24b")
+
+[node name="SphereMeshInstance3D" type="MeshInstance3D" parent="." unique_id=1484302613]
+transform = Transform3D(1.55, 0, 0, 0, 1.55, 0, 0, 0, 1.55, 0, 3.4059274, 0)
+material_override = SubResource("StandardMaterial3D_rvwfd")
+mesh = SubResource("SphereMesh_hpw4o")
+
+[node name="WalkingAnimationPlayerNPC" type="AnimationPlayer" parent="." unique_id=1553908338]
+libraries/ = SubResource("AnimationLibrary_rvwfd")
+script = ExtResource("3_33rit")
+
+[node name="PedestrianHitbox" type="Area3D" parent="." unique_id=1346114990]
+transform = Transform3D(1.25, 2.220446e-15, 4.440892e-15, 0, 1.2500001, 9.147938e-16, 4.440892e-15, 9.147938e-16, 1.2500001, 0, 1.2962598, 0)
+
+[node name="Hitbox_Shape" type="CollisionShape3D" parent="PedestrianHitbox" unique_id=2111692176]
+transform = Transform3D(1, -1.2434498e-14, -1.0658141e-14, 0, 0.99999964, 1.7881393e-07, 0, -1.7881393e-07, 0.99999964, 0.15533471, 0.91755843, 0.03196325)
+shape = SubResource("BoxShape3D_8kprj")
+
+[connection signal="ready" from="." to="WalkingAnimationPlayerNPC" method="_on_pedestrian_npc_group_ready"]
+[connection signal="area_entered" from="PedestrianHitbox" to="." method="_on_pedestrian_hitbox_area_entered"]

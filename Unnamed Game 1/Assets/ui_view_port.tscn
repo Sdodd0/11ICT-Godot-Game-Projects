@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d1xj4rg745w1w"]
+
+[ext_resource type="Script" uid="uid://d4du1afq3pmex" path="res://Scripts/button.gd" id="1_75b2k"]
+
+[node name="MainMenu" type="Control" unique_id=843691048]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="." unique_id=276838544]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 250.0
+offset_right = 1025.0
+offset_bottom = 400.0
+theme_override_font_sizes/font_size = 88
+text = "START GAME"
+script = ExtResource("1_75b2k")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1549317097]
+position = Vector2(575, 325)
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

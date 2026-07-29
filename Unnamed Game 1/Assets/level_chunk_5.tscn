@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dfbh4wgu7y5sa"]
+
+[ext_resource type="PackedScene" uid="uid://dk478udj0maon" path="res://Assets/floor_level_base.tscn" id="1_4bab8"]
+[ext_resource type="PackedScene" uid="uid://com02r04d1gke" path="res://Assets/drone_hostile_npc.tscn" id="2_k4utg"]
+[ext_resource type="Script" uid="uid://bva0onlv1h8ev" path="res://Scripts/floor_level_base.gd" id="2_qry3d"]
+[ext_resource type="Script" uid="uid://cm6yqhk8mw8hc" path="res://Assets/drone_hostile_npc.gd" id="3_qry3d"]
+[ext_resource type="PackedScene" uid="uid://c3ns3g7nsmx8v" path="res://Assets/tree_obstacle.tscn" id="4_1guhb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_br7qv"]
+size = Vector3(1, 0.81689453, 1.8329468)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7hngj"]
+size = Vector3(1.2758493, 0.775177, 1.673645)
+
+[node name="Level_Chunk5" type="Node3D" unique_id=1264588499]
+
+[node name="Floor_Level_Base" parent="." unique_id=280130617 instance=ExtResource("1_4bab8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("2_qry3d")
+
+[node name="Drone_Hostile_NPC" parent="Floor_Level_Base" unique_id=265961464 instance=ExtResource("2_k4utg")]
+transform = Transform3D(-6.556708e-08, -0.63392746, -1.3594617, 0, 1.3594617, -0.63392746, 1.5, -2.7709849e-08, -5.9423954e-08, 47.964752, 13.193104, 0)
+script = ExtResource("3_qry3d")
+
+[node name="Hitbox" type="Area3D" parent="Floor_Level_Base/Drone_Hostile_NPC" unique_id=1844452782]
+transform = Transform3D(1, 1.7763568e-15, 3.5527137e-15, 0, 1.0000001, 7.3183504e-16, 3.5527137e-15, 7.3183504e-16, 1.0000001, 0, 0, 0)
+
+[node name="Hitbox_Shape" type="CollisionShape3D" parent="Floor_Level_Base/Drone_Hostile_NPC/Hitbox" unique_id=663218029]
+transform = Transform3D(1, -1.2434498e-14, -1.0658141e-14, 0, 0.99999964, 1.7881393e-07, 0, -1.7881393e-07, 0.99999964, 1.1368684e-12, 0.37309456, 0.03196335)
+shape = SubResource("BoxShape3D_br7qv")
+
+[node name="Tree_Obstacle1" parent="Floor_Level_Base" unique_id=1398551968 instance=ExtResource("4_1guhb")]
+transform = Transform3D(5.5, 0, 0, 0, 5.5, 0, 0, 0, 5.5, 19.199646, 0, -1.191)
+
+[node name="HitBox" type="Area3D" parent="Floor_Level_Base/Tree_Obstacle1" unique_id=1654418484]
+
+[node name="HitBox Shape" type="CollisionShape3D" parent="Floor_Level_Base/Tree_Obstacle1/HitBox" unique_id=1975469337]
+transform = Transform3D(1.090909, 0, 0, 0, 1.090909, 0, 0, 0, 1.090909, -0.37277824, 1.505545, 0.25730038)
+shape = SubResource("BoxShape3D_7hngj")
+
+[connection signal="area_entered" from="Floor_Level_Base/Drone_Hostile_NPC/Hitbox" to="Floor_Level_Base" method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="Floor_Level_Base/Tree_Obstacle1/HitBox" to="Floor_Level_Base" method="_on_hit_box_area_entered"]
