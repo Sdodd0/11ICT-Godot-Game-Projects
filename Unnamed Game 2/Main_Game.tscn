@@ -46,7 +46,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Grapple Hook/MeshInstance3D:scale")
+tracks/0/path = NodePath("Grapple_Hook/MeshInstance3D:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -63,7 +63,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Grapple Hook/MeshInstance3D:scale")
+tracks/0/path = NodePath("Grapple_Hook/MeshInstance3D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -78,7 +78,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Grapple Hook/MeshInstance3D:scale")
+tracks/0/path = NodePath("Grapple_Hook/MeshInstance3D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -95,7 +95,7 @@ _data = {
 &"RESET": SubResource("Animation_n8k4e")
 }
 
-[node name="Base Map Group" type="Node3D" unique_id=932230738]
+[node name="Base Map Group" type="Node3D" unique_id=932230738 groups=["Global Nodes"]]
 script = ExtResource("3_aw5v0")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=174660409]
@@ -296,28 +296,28 @@ metadata/_edit_lock_ = true
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -2.7153015, -4.103138, 0.2470398)
 shape = SubResource("BoxShape3D_aw5v0")
 
-[node name="Grapple Hook" type="Node3D" parent="." unique_id=578444218]
+[node name="Grapple_Hook" type="Node3D" parent="." unique_id=578444218]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.193553, 3.1447191, -4.0582075)
 script = ExtResource("4_f2i40")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Grapple Hook" unique_id=1629295723]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grapple_Hook" unique_id=1629295723]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 mesh = SubResource("SphereMesh_130gx")
 
-[node name="Grappling Hook Area" type="Area3D" parent="Grapple Hook" unique_id=336635802]
+[node name="Grappling Hook Area" type="Area3D" parent="Grapple_Hook" unique_id=336635802]
 collision_layer = 783
 input_capture_on_drag = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Grapple Hook/Grappling Hook Area" unique_id=848077550]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grapple_Hook/Grappling Hook Area" unique_id=848077550]
 shape = SubResource("SphereShape3D_6qd6b")
 
-[node name="HookanimationPlayer" type="AnimationPlayer" parent="Grapple Hook" unique_id=844382616]
+[node name="HookanimationPlayer" type="AnimationPlayer" parent="Grapple_Hook" unique_id=844382616]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_n1smw")
 script = ExtResource("5_cjg4v")
 
 [connection signal="body_exited" from="Void/Area3D" to="." method="_on_area_3d_body_exited"]
-[connection signal="area_entered" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook" method="_on_grappling_hook_area_area_entered"]
-[connection signal="area_entered" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook/HookanimationPlayer" method="_on_grappling_hook_area_area_entered"]
-[connection signal="area_exited" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook" method="_on_grappling_hook_area_area_exited"]
-[connection signal="area_exited" from="Grapple Hook/Grappling Hook Area" to="Grapple Hook/HookanimationPlayer" method="_on_grappling_hook_area_area_exited"]
+[connection signal="area_entered" from="Grapple_Hook/Grappling Hook Area" to="Grapple_Hook" method="_on_grappling_hook_area_area_entered"]
+[connection signal="area_entered" from="Grapple_Hook/Grappling Hook Area" to="Grapple_Hook/HookanimationPlayer" method="_on_grappling_hook_area_area_entered"]
+[connection signal="area_exited" from="Grapple_Hook/Grappling Hook Area" to="Grapple_Hook" method="_on_grappling_hook_area_area_exited"]
+[connection signal="area_exited" from="Grapple_Hook/Grappling Hook Area" to="Grapple_Hook/HookanimationPlayer" method="_on_grappling_hook_area_area_exited"]
